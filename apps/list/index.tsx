@@ -2,12 +2,18 @@ import { useState } from 'react';
 import Head from 'next/head';
 import { Layout } from '../../components/Layout';
 import { calculatePower } from '../utils';
+import TableHead from './TableHead';
+import Row from './Row';
 
 import type { Pokemon } from '../../interfaces/pokemon';
 
 const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [powerThreshold, setPowerThreshold] = useState(0);
+
+  const filteredPokemons = pokemons
+    .filter(({ name }) => name.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter(pokemon => calculatePower(pokemon) > powerThreshold);
   
   return (
     <>
@@ -23,77 +29,16 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
         <input id="search" type="text" value={searchTerm} onChange={({ target }) => setSearchTerm(target.value) }/>
 
         <label htmlFor="power_threshold">Power threshold</label>
-        <input id="power_threshold" type="number" value={powerThreshold} onChange={({ target }) => setPowerThreshold(Number(target.value)) }></input>
+        <input id="power_threshold" type="number" value={powerThreshold || ''} onChange={({ target }) => setPowerThreshold(Number(target.value)) }></input>
 
         <div>Count over threshold: </div>
         <div>Min: </div>
         <div>Max: </div>
 
         <table>
-          <thead>
-            <tr>
-              <th>
-              ID
-              </th>
-              <th>
-              Name
-              </th>
-              <th>
-              Type
-              </th>
-              <th>
-              hp
-              </th>
-              <th>
-              Attack
-              </th>
-              <th>
-              Defense
-              </th>
-              <th>
-              Special Attack
-              </th>
-              <th>
-              Special Defense
-              </th>
-              <th>
-              Speed
-              </th>
-            </tr>
-          </thead>
+          <TableHead />
           <tbody>
-            {pokemons
-              .filter(({ name }) => name.toLowerCase().includes(searchTerm.toLowerCase()))
-              .filter(pokemon => calculatePower(pokemon) > powerThreshold)
-              .map(({id, name, type, hp, attack, defense, special_attack, special_defense, speed}) => <tr key={id}>
-                <td>
-                  {id}
-                </td>
-                <td>
-                  {name}
-                </td>
-                <td>
-                  {type.join(', ')}
-                </td>
-                <td>
-                  {hp}
-                </td>
-                <td>
-                  {attack}
-                </td>
-                <td>
-                  {defense}
-                </td>
-                <td>
-                  {special_attack}
-                </td>
-                <td>
-                  {special_defense}
-                </td>
-                <td>
-                  {speed}
-                </td>
-              </tr>)}
+            {filteredPokemons.map((pokemon) => <Row key={pokemon.id} {...pokemon} />)}
           </tbody>
         </table>
       </div>
