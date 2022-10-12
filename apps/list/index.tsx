@@ -22,10 +22,12 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
       <h1>Pokemon list</h1>
 
       <div>
-        <div>Search</div>
-        <input type="text"></input>
-        <div>Power threshold</div>
-        <input type="text"></input>
+        <label htmlFor="search">Search</label>
+        <input id="search" type="text"></input>
+
+        <label htmlFor="power_threshold">Power threshold</label>
+        <input id="power_threshold" type="text"></input>
+
         <div>Count over threshold: </div>
         <div>Min: </div>
         <div>Max: </div>
