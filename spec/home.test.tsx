@@ -1,4 +1,5 @@
 import { render, screen, within }  from '@testing-library/react';
+import tableQueries from 'testing-library-table-queries';
 import ListPage from '../pages';
 
 const mockPokemons = [{
@@ -31,8 +32,8 @@ const mockPokemons = [{
 }];
 
 describe('ListPage', () => {
-  it('renders table with the Bulbasaur, whose id is 1', () => {
-    render(<ListPage pokemons={mockPokemons}/>);
+  it('renders table with the Bulbasaur, whose id is 1, with Name and hp', () => {
+    const { getCellByRowAndColumnHeaders} = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...tableQueries }}  );
 
     const row = screen.getByRole('cell', {name: '1'}).closest('tr');
 
@@ -40,7 +41,7 @@ describe('ListPage', () => {
       throw Error('row not found');
     }
 
-    const utils = within(row);
-    expect(utils.getByText('Bulbasaur')).toBeInTheDocument();
+    expect(getCellByRowAndColumnHeaders('1', 'Name', undefined)).toHaveTextContent('Bulbasaur');
+    expect(getCellByRowAndColumnHeaders('1', 'hp', undefined)).toHaveTextContent('45');
   });
 });
