@@ -31,9 +31,9 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
         <label htmlFor="power_threshold">Power threshold</label>
         <input id="power_threshold" type="number" value={powerThreshold || ''} onChange={({ target }) => setPowerThreshold(Number(target.value)) }></input>
 
-        <div>Count over threshold: </div>
-        <div>Min: </div>
-        <div>Max: </div>
+        <span>{`Count over threshold: ${filteredPokemons.length}`}</span>
+        <span>Min: </span>
+        <span>Max: </span>
 
         <PokemonTable pokemons={filteredPokemons}/>
       </div>
