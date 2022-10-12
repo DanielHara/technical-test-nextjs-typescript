@@ -69,7 +69,7 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
           </thead>
           <tbody>
             {pokemons
-              .filter(({ name }) => name.includes(searchTerm))
+              .filter(({ name }) => name.toLowerCase().includes(searchTerm.toLowerCase()))
               .map(({id, name, type, hp, attack, defense, special_attack, special_defense, speed}) => <tr key={id}>
                 <td>
                   {id}
