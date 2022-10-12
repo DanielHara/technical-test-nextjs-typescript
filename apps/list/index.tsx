@@ -31,13 +31,29 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
         <div>Max: </div>
 
         <table>
+          <thead>
+            <tr>
+              <th>
+              ID
+              </th>
+              <th>
+              Name
+              </th>
+              <th>
+              hp
+              </th>
+            </tr>
+          </thead>
           <tbody>
-            {pokemons.map(({id, name}) => <tr key={id}>
+            {pokemons && pokemons.map(({id, name, hp}) => <tr key={id}>
               <td>
                 {id}
               </td>
               <td>
                 {name}
+              </td>
+              <td>
+                {hp}
               </td>
             </tr>)}
           </tbody>
