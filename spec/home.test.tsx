@@ -1,4 +1,4 @@
-import { fireEvent, render, queries, waitFor }  from '@testing-library/react';
+import { fireEvent, render, queries, within }  from '@testing-library/react';
 import tableQueries from 'testing-library-table-queries';
 import ListPage from '../pages';
 
@@ -43,15 +43,40 @@ describe('home Page', () => {
     });
 
     it('searching for "Bulbasaur" will include only the Bulbasaur Pokemon in the result', () => {
-      const { getByLabelText, getAllRows, getRowByFirstCellText, queryAllRowsByFirstCellText } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+      const { getByLabelText, getByRowgroupType,  } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
 
       fireEvent.change(getByLabelText('Search'), { target: { value: 'Bulbasaur' } });
 
-      // getAllRows also includes header rows, so we need to expect (1 + 1) rows.
-      expect(getAllRows()).toHaveLength(2);
+      const tbody = getByRowgroupType('tbody');
+      const { getAllRows, getRowByFirstCellText, queryAllRowsByFirstCellText } = within(tbody, { ...queries, ...tableQueries } );
+
+      expect(getAllRows()).toHaveLength(1);
       
       const bulbasaurRow = getRowByFirstCellText('1');
       expect(bulbasaurRow).toHaveTextContent('Bulbasaur');
+
+      expect(queryAllRowsByFirstCellText('2')).toHaveLength(0);
+    });
+
+
+    it('searching for "char" will include "Charmander", "Charmeleon" and "Charizard"', () => {
+      const { getByLabelText, getByRowgroupType } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+
+      fireEvent.change(getByLabelText('Search'), { target: { value: 'char' } });
+
+      const tbody = getByRowgroupType('tbody');
+      const { getAllRows, getRowByFirstCellText, queryAllRowsByFirstCellText } = within(tbody, { ...queries, ...tableQueries } );
+
+      expect(getAllRows()).toHaveLength(3);
+      
+      const charmanderRow = getRowByFirstCellText('4');
+      expect(charmanderRow).toHaveTextContent('Charmander');
+
+      const charmeleonRow = getRowByFirstCellText('5');
+      expect(charmeleonRow).toHaveTextContent('Charmeleon');
+
+      const charizardRow = getRowByFirstCellText('6');
+      expect(charizardRow).toHaveTextContent('Charizard');
 
       expect(queryAllRowsByFirstCellText('2')).toHaveLength(0);
     });
