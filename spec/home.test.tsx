@@ -31,17 +31,19 @@ const mockPokemons = [{
   'speed': 60
 }];
 
-describe('ListPage', () => {
-  it('renders table with the Bulbasaur, whose id is 1, with Name and hp', () => {
-    const { getCellByRowAndColumnHeaders} = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...tableQueries }}  );
+describe('home Page', () => {
+  describe('table', () => {
+    it('shows all information about Bulbasaur', () => {
+      const { getCellByRowAndColumnHeaders } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...tableQueries }}  );
 
-    const row = screen.getByRole('cell', {name: '1'}).closest('tr');
-
-    if (!row) {
-      throw Error('row not found');
-    }
-
-    expect(getCellByRowAndColumnHeaders('1', 'Name', undefined)).toHaveTextContent('Bulbasaur');
-    expect(getCellByRowAndColumnHeaders('1', 'hp', undefined)).toHaveTextContent('45');
+      expect(getCellByRowAndColumnHeaders('1', 'Name', undefined)).toHaveTextContent('Bulbasaur');
+      expect(getCellByRowAndColumnHeaders('1', 'Type', undefined)).toHaveTextContent('Grass, Poison');
+      expect(getCellByRowAndColumnHeaders('1', 'hp', undefined)).toHaveTextContent('45');
+      expect(getCellByRowAndColumnHeaders('1', 'Attack', undefined)).toHaveTextContent('49');
+      expect(getCellByRowAndColumnHeaders('1', 'Defense', undefined)).toHaveTextContent('49');
+      expect(getCellByRowAndColumnHeaders('1', 'special_attack', undefined)).toHaveTextContent('65');
+      expect(getCellByRowAndColumnHeaders('1', 'special_defense', undefined)).toHaveTextContent('65');
+      expect(getCellByRowAndColumnHeaders('1', 'speed', undefined)).toHaveTextContent('45');
+    });
   });
 });
