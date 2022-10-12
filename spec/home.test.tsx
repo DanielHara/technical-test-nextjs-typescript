@@ -1,5 +1,5 @@
 import { fireEvent, render, queries, within }  from '@testing-library/react';
-import tableQueries from 'testing-library-table-queries';
+import tableQueries, { queryAllRows } from 'testing-library-table-queries';
 import { calculatePower } from '../apps/utils';
 import ListPage from '../pages';
 
@@ -168,6 +168,34 @@ describe('home Page', () => {
         const { getByLabelText, getByRowgroupType } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
         
         fireEvent.change(getByLabelText('Power threshold'), { target: { value: 100000 } });
+
+        const tbody = getByRowgroupType('tbody');
+        const { queryAllRows } = within(tbody, { ...queries, ...tableQueries } );
+
+        expect(queryAllRows()).toHaveLength(0);
+      });
+    });
+
+    describe('Search and Power Threshold work together' , () => {
+      it('by entering 533 and searching for "char", then "Charizard" is shown', () => {
+        const { getByLabelText, getByRowgroupType, getCellByRowAndColumnHeaders } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+        
+        fireEvent.change(getByLabelText('Search'), { target: { value: 'char' } });
+        fireEvent.change(getByLabelText('Power threshold'), { target: { value: 533 } });
+
+        const tbody = getByRowgroupType('tbody');
+        const { getAllRows } = within(tbody, { ...queries, ...tableQueries } );
+
+        // In our fixtures, only one Pokemon, "Charizard" (id: 6) has power > 533
+        expect(getCellByRowAndColumnHeaders('6', 'Name', undefined)).toHaveTextContent('Charizard');
+        expect(getAllRows()).toHaveLength(1);
+      });
+
+      it('by entering 533 and searching for "abc", then no Pokemon is shown', () => {
+        const { getByLabelText, getByRowgroupType } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+        
+        fireEvent.change(getByLabelText('Search'), { target: { value: 'abc' } });
+        fireEvent.change(getByLabelText('Power threshold'), { target: { value: 533 } });
 
         const tbody = getByRowgroupType('tbody');
         const { queryAllRows } = within(tbody, { ...queries, ...tableQueries } );
