@@ -93,21 +93,73 @@ describe('home Page', () => {
         expect(powerThresholdInput).toHaveAttribute('type', 'number');
       });
 
-      it('by entering 524, only all and Pokemons with total power > 524 are shown', () => {
+      it('by entering 0, all Pokemons are shown', () => {
         const { getByLabelText, getByRowgroupType } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
         
-        fireEvent.change(getByLabelText('Power threshold'), { target: { value: 524 } });
+        fireEvent.change(getByLabelText('Power threshold'), { target: { value: 0 } });
 
         const tbody = getByRowgroupType('tbody');
-        const { getAllRows, getCellByRowAndColumnHeaders } = within(tbody, { ...queries, ...tableQueries } );
+        const { getAllRows } = within(tbody, { ...queries, ...tableQueries } );
 
-        const pokemonsAboveThreshold = mockPokemons.filter(pokemon => calculatePower(pokemon) > 524);
+        expect(getAllRows()).toHaveLength(mockPokemons.length);
+      });
+      
+      it('by entering 190, "Caterpie" (id: 10) is shown', () => {
+        const { getByLabelText, getByRowgroupType } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+        
+        fireEvent.change(getByLabelText('Power threshold'), { target: { value: 190 } });
+
+        const tbody = getByRowgroupType('tbody');
+        const { getRowByFirstCellText } = within(tbody, { ...queries, ...tableQueries } );
+
+        expect(getRowByFirstCellText('10')).toBeInTheDocument();
+      });
+
+      it('by entering 200, "Caterpie" (id: 10) is not shown', () => {
+        const { getByLabelText, getByRowgroupType } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+        
+        fireEvent.change(getByLabelText('Power threshold'), { target: { value: 200 } });
+
+        const tbody = getByRowgroupType('tbody');
+        const { queryRowByFirstCellText } = within(tbody, { ...queries, ...tableQueries } );
+
+        expect(queryRowByFirstCellText('10')).toBeNull();
+      });
+
+      it('by entering 300, only all and Pokemons with total power > 300 are shown', () => {
+        const { getByLabelText, getByRowgroupType, getCellByRowAndColumnHeaders } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+        
+        fireEvent.change(getByLabelText('Power threshold'), { target: { value: 300 } });
+
+        const tbody = getByRowgroupType('tbody');
+        const { getAllRows } = within(tbody, { ...queries, ...tableQueries } );
+
+        const pokemonsAboveThreshold = mockPokemons.filter(pokemon => calculatePower(pokemon) > 300);
 
         pokemonsAboveThreshold.forEach(({ id, name }) => {
           expect(getCellByRowAndColumnHeaders(`${id}`, 'Name', undefined)).toHaveTextContent(name);
         });
 
-        // In our fixtures, only one Pokemon, "Venusaur", has power > 542
+        expect(pokemonsAboveThreshold.length).toBeGreaterThan(0);
+        expect(pokemonsAboveThreshold.length).toBeLessThan(mockPokemons.length);
+        expect(getAllRows()).toHaveLength(pokemonsAboveThreshold.length);
+      });
+
+      it('by entering 534, only all and Pokemons with total power > 533 are shown', () => {
+        const { getByLabelText, getByRowgroupType, getCellByRowAndColumnHeaders } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+        
+        fireEvent.change(getByLabelText('Power threshold'), { target: { value: 533 } });
+
+        const tbody = getByRowgroupType('tbody');
+        const { getAllRows } = within(tbody, { ...queries, ...tableQueries } );
+
+        const pokemonsAboveThreshold = mockPokemons.filter(pokemon => calculatePower(pokemon) > 533);
+
+        pokemonsAboveThreshold.forEach(({ id, name }) => {
+          expect(getCellByRowAndColumnHeaders(`${id}`, 'Name', undefined)).toHaveTextContent(name);
+        });
+
+        // In our fixtures, only one Pokemon, "Charizard", has power > 533
         expect(pokemonsAboveThreshold).toHaveLength(1);
         expect(getAllRows()).toHaveLength(pokemonsAboveThreshold.length);
       });

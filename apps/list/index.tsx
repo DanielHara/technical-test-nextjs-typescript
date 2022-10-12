@@ -1,19 +1,13 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import { Layout } from '../../components/Layout';
+import { calculatePower } from '../utils';
 
 import type { Pokemon } from '../../interfaces/pokemon';
 
-const calculatePower = (pokemon: Pokemon) =>
-  pokemon.hp +
-  pokemon.attack +
-  pokemon.defense +
-  pokemon.special_attack +
-  pokemon.special_defense +
-  pokemon.speed;
-
 const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [powerThreshold, setPowerThreshold] = useState(0);
   
   return (
     <>
@@ -29,7 +23,7 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
         <input id="search" type="text" value={searchTerm} onChange={({ target }) => setSearchTerm(target.value) }/>
 
         <label htmlFor="power_threshold">Power threshold</label>
-        <input id="power_threshold" type="number"></input>
+        <input id="power_threshold" type="number" value={powerThreshold} onChange={({ target }) => setPowerThreshold(Number(target.value)) }></input>
 
         <div>Count over threshold: </div>
         <div>Min: </div>
@@ -70,6 +64,7 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
           <tbody>
             {pokemons
               .filter(({ name }) => name.toLowerCase().includes(searchTerm.toLowerCase()))
+              .filter(pokemon => calculatePower(pokemon) > powerThreshold)
               .map(({id, name, type, hp, attack, defense, special_attack, special_defense, speed}) => <tr key={id}>
                 <td>
                   {id}
