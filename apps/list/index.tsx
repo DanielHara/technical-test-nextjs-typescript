@@ -40,12 +40,30 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
               Name
               </th>
               <th>
+              Type
+              </th>
+              <th>
               hp
+              </th>
+              <th>
+              Attack
+              </th>
+              <th>
+              Defense
+              </th>
+              <th>
+              Special Attack
+              </th>
+              <th>
+              Special Defense
+              </th>
+              <th>
+              Speed
               </th>
             </tr>
           </thead>
           <tbody>
-            {pokemons && pokemons.map(({id, name, hp}) => <tr key={id}>
+            {pokemons && pokemons.map(({id, name, type, hp, attack, defense, special_attack, special_defense, speed}) => <tr key={id}>
               <td>
                 {id}
               </td>
@@ -53,7 +71,25 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
                 {name}
               </td>
               <td>
+                {type.join(', ')}
+              </td>
+              <td>
                 {hp}
+              </td>
+              <td>
+                {attack}
+              </td>
+              <td>
+                {defense}
+              </td>
+              <td>
+                {special_attack}
+              </td>
+              <td>
+                {special_defense}
+              </td>
+              <td>
+                {speed}
               </td>
             </tr>)}
           </tbody>

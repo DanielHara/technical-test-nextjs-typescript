@@ -1,4 +1,4 @@
-import { render, screen, within }  from '@testing-library/react';
+import { render }  from '@testing-library/react';
 import tableQueries from 'testing-library-table-queries';
 import ListPage from '../pages';
 
@@ -41,9 +41,9 @@ describe('home Page', () => {
       expect(getCellByRowAndColumnHeaders('1', 'hp', undefined)).toHaveTextContent('45');
       expect(getCellByRowAndColumnHeaders('1', 'Attack', undefined)).toHaveTextContent('49');
       expect(getCellByRowAndColumnHeaders('1', 'Defense', undefined)).toHaveTextContent('49');
-      expect(getCellByRowAndColumnHeaders('1', 'special_attack', undefined)).toHaveTextContent('65');
-      expect(getCellByRowAndColumnHeaders('1', 'special_defense', undefined)).toHaveTextContent('65');
-      expect(getCellByRowAndColumnHeaders('1', 'speed', undefined)).toHaveTextContent('45');
+      expect(getCellByRowAndColumnHeaders('1', 'Special Attack', undefined)).toHaveTextContent('65');
+      expect(getCellByRowAndColumnHeaders('1', 'Special Defense', undefined)).toHaveTextContent('65');
+      expect(getCellByRowAndColumnHeaders('1', 'Speed', undefined)).toHaveTextContent('45');
     });
   });
 });
