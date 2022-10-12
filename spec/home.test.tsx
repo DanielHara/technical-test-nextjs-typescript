@@ -145,7 +145,7 @@ describe('home Page', () => {
         expect(getAllRows()).toHaveLength(pokemonsAboveThreshold.length);
       });
 
-      it('by entering 534, only all and Pokemons with total power > 533 are shown', () => {
+      it('by entering 533, only all and Pokemons with total power > 533 are shown', () => {
         const { getByLabelText, getByRowgroupType, getCellByRowAndColumnHeaders } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
         
         fireEvent.change(getByLabelText('Power threshold'), { target: { value: 533 } });
