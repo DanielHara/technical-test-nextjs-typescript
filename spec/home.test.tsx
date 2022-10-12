@@ -164,7 +164,7 @@ describe('home Page', () => {
         expect(getAllRows()).toHaveLength(pokemonsAboveThreshold.length);
       });
 
-      it('by entering 100000, not Pokemons are shown', () => {
+      it('by entering 100000, no Pokemons are shown', () => {
         const { getByLabelText, getByRowgroupType } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
         
         fireEvent.change(getByLabelText('Power threshold'), { target: { value: 100000 } });
@@ -201,6 +201,69 @@ describe('home Page', () => {
         const { queryAllRows } = within(tbody, { ...queries, ...tableQueries } );
 
         expect(queryAllRows()).toHaveLength(0);
+      });
+    });
+
+    describe('Count, max and min', () => {
+      it('no filters', () => {
+        const { getByText } = render(<ListPage pokemons={mockPokemons}/>);
+  
+        expect(getByText(`Count over threshold: ${mockPokemons.length}`)).toBeInTheDocument();
+        expect(mockPokemons.length).toBeGreaterThan(0);
+      });
+  
+      it('searching for "Bulbasaur"', () => {
+        const { getByLabelText, getByText } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+  
+        fireEvent.change(getByLabelText('Search'), { target: { value: 'Bulbasaur' } });
+  
+        expect(getByText('Count over threshold: 1')).toBeInTheDocument();
+      });
+      
+      it('searching for "char"', () => {
+        const { getByLabelText, getByText } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+  
+        fireEvent.change(getByLabelText('Search'), { target: { value: 'char' } });
+  
+        // "Charmander", "Charmeleon", "Charizard"
+        expect(getByText('Count over threshold: 3')).toBeInTheDocument();
+      });
+
+      it('searching for "soapsoaksoaksoaks"', () => {
+        const { getByLabelText, getByText } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+  
+        fireEvent.change(getByLabelText('Search'), { target: { value: 'soapsoaksoaksoaks' } });
+  
+        expect(getByText('Count over threshold: 0')).toBeInTheDocument();
+      });
+
+      it('Pokemons with total power > 300', () => {
+        const { getByLabelText, getByText } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+        
+        fireEvent.change(getByLabelText('Power threshold'), { target: { value: 300 } });
+
+        const pokemonsAboveThreshold = mockPokemons.filter(pokemon => calculatePower(pokemon) > 300);
+        
+        expect(getByText(`Count over threshold: ${pokemonsAboveThreshold.length}`)).toBeInTheDocument();
+        expect(pokemonsAboveThreshold.length).toBeGreaterThan(0);
+      });
+
+      it('Searching with total power > 10000', () => {
+        const { getByLabelText, getByText } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+        
+        fireEvent.change(getByLabelText('Power threshold'), { target: { value: 10000 } });
+
+        expect(getByText('Count over threshold: 0')).toBeInTheDocument();
+      });
+
+      it('Searching for "char" and with total power > 310', () => {
+        const { getByLabelText, getByText } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+        
+        fireEvent.change(getByLabelText('Search'), { target: { value: 'char'} });
+        fireEvent.change(getByLabelText('Power threshold'), { target: { value: 310 } });
+
+        // "Charmeleon", "Charizard"
+        expect(getByText('Count over threshold: 2')).toBeInTheDocument();
       });
     });
   });
