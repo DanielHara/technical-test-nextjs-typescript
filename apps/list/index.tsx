@@ -2,10 +2,10 @@ import { useState } from 'react';
 import Head from 'next/head';
 import { Layout } from '../../components/Layout';
 import { calculatePower } from '../utils';
-import TableHead from './TableHead';
-import Row from './Row';
+
 
 import type { Pokemon } from '../../interfaces/pokemon';
+import PokemonTable from './PokemonTable';
 
 const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -35,12 +35,7 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
         <div>Min: </div>
         <div>Max: </div>
 
-        <table>
-          <TableHead />
-          <tbody>
-            {filteredPokemons.map((pokemon) => <Row key={pokemon.id} {...pokemon} />)}
-          </tbody>
-        </table>
+        <PokemonTable pokemons={filteredPokemons}/>
       </div>
     </>
   );
