@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Head from 'next/head';
 import { Layout } from '../../components/Layout';
 
@@ -12,6 +13,8 @@ const calculatePower = (pokemon: Pokemon) =>
   pokemon.speed;
 
 const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  
   return (
     <>
       <Head>
@@ -23,7 +26,7 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
 
       <div>
         <label htmlFor="search">Search</label>
-        <input id="search" type="text"></input>
+        <input id="search" type="text" value={searchTerm} onChange={({ target }) => setSearchTerm(target.value) }/>
 
         <label htmlFor="power_threshold">Power threshold</label>
         <input id="power_threshold" type="text"></input>
@@ -65,35 +68,37 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
             </tr>
           </thead>
           <tbody>
-            {pokemons && pokemons.map(({id, name, type, hp, attack, defense, special_attack, special_defense, speed}) => <tr key={id}>
-              <td>
-                {id}
-              </td>
-              <td>
-                {name}
-              </td>
-              <td>
-                {type.join(', ')}
-              </td>
-              <td>
-                {hp}
-              </td>
-              <td>
-                {attack}
-              </td>
-              <td>
-                {defense}
-              </td>
-              <td>
-                {special_attack}
-              </td>
-              <td>
-                {special_defense}
-              </td>
-              <td>
-                {speed}
-              </td>
-            </tr>)}
+            {pokemons
+              .filter(({ name }) => name.includes(searchTerm))
+              .map(({id, name, type, hp, attack, defense, special_attack, special_defense, speed}) => <tr key={id}>
+                <td>
+                  {id}
+                </td>
+                <td>
+                  {name}
+                </td>
+                <td>
+                  {type.join(', ')}
+                </td>
+                <td>
+                  {hp}
+                </td>
+                <td>
+                  {attack}
+                </td>
+                <td>
+                  {defense}
+                </td>
+                <td>
+                  {special_attack}
+                </td>
+                <td>
+                  {special_defense}
+                </td>
+                <td>
+                  {speed}
+                </td>
+              </tr>)}
           </tbody>
         </table>
       </div>
