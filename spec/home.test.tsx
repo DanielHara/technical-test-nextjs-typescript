@@ -1,5 +1,6 @@
 import { fireEvent, render, queries, within }  from '@testing-library/react';
 import tableQueries from 'testing-library-table-queries';
+import { calculatePower } from '../apps/utils';
 import ListPage from '../pages';
 
 import { getMockPokemons } from './fixtures'; 
@@ -90,6 +91,25 @@ describe('home Page', () => {
         const powerThresholdInput = getByLabelText('Power threshold');
         expect(powerThresholdInput).toBeInTheDocument();
         expect(powerThresholdInput).toHaveAttribute('type', 'number');
+      });
+
+      it('by entering 524, only all and Pokemons with total power > 524 are shown', () => {
+        const { getByLabelText, getByRowgroupType } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+        
+        fireEvent.change(getByLabelText('Power threshold'), { target: { value: 524 } });
+
+        const tbody = getByRowgroupType('tbody');
+        const { getAllRows, getCellByRowAndColumnHeaders } = within(tbody, { ...queries, ...tableQueries } );
+
+        const pokemonsAboveThreshold = mockPokemons.filter(pokemon => calculatePower(pokemon) > 524);
+
+        pokemonsAboveThreshold.forEach(({ id, name }) => {
+          expect(getCellByRowAndColumnHeaders(`${id}`, 'Name', undefined)).toHaveTextContent(name);
+        });
+
+        // In our fixtures, only one Pokemon, "Venusaur", has power > 542
+        expect(pokemonsAboveThreshold).toHaveLength(1);
+        expect(getAllRows()).toHaveLength(pokemonsAboveThreshold.length);
       });
     });
   });
