@@ -29,6 +29,19 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
         <div>Count over threshold: </div>
         <div>Min: </div>
         <div>Max: </div>
+
+        <table>
+          <tbody>
+            {pokemons.map(({id, name}) => <tr key={id}>
+              <td>
+                {id}
+              </td>
+              <td>
+                {name}
+              </td>
+            </tr>)}
+          </tbody>
+        </table>
       </div>
     </>
   );
