@@ -163,6 +163,17 @@ describe('home Page', () => {
         expect(pokemonsAboveThreshold).toHaveLength(1);
         expect(getAllRows()).toHaveLength(pokemonsAboveThreshold.length);
       });
+
+      it('by entering 100000, not Pokemons are shown', () => {
+        const { getByLabelText, getByRowgroupType } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+        
+        fireEvent.change(getByLabelText('Power threshold'), { target: { value: 100000 } });
+
+        const tbody = getByRowgroupType('tbody');
+        const { queryAllRows } = within(tbody, { ...queries, ...tableQueries } );
+
+        expect(queryAllRows()).toHaveLength(0);
+      });
     });
   });
 });
