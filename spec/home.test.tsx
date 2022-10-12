@@ -59,4 +59,12 @@ describe('home Page', () => {
       expect(getCellByRowAndColumnHeaders('2', 'Speed', undefined)).toHaveTextContent('60');
     });
   });
+
+  describe('search functionality', () => {
+    it('contains input where you can search Pokemon', () => {
+      const { getByLabelText } = render(<ListPage pokemons={mockPokemons}/>);
+
+      expect(getByLabelText('Search')).toBeInTheDocument();
+    });
+  });
 });
