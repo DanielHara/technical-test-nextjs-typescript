@@ -1,8 +1,8 @@
-import React from "react";
-import Head from "next/head";
+import React from 'react';
+import Head from 'next/head';
 
-import { Pokemon } from "../../interfaces/pokemon";
-import { Layout } from "../../components/Layout";
+import { Pokemon } from '../../interfaces/pokemon';
+import { Layout } from '../../components/Layout';
 
 const PokemonPage = (props: Pokemon) => {
   return (
@@ -11,8 +11,8 @@ const PokemonPage = (props: Pokemon) => {
         <title>{props.name}</title>
       </Head>
       <h1>{props.name}</h1>
-      <button>{`< Previous`}</button>
-      <button>{`Next >`}</button>
+      <button>{'< Previous'}</button>
+      <button>{'Next >'}</button>
     </>
   );
 };
@@ -28,8 +28,8 @@ export async function getServerSideProps({
     // Implement new endpoint in /api/pokemon/[id].ts and use it here
     const pokemonExample: Pokemon = {
       id: id,
-      name: "Bulbasaur",
-      type: ["Grass", "Poison"],
+      name: 'Bulbasaur',
+      type: ['Grass', 'Poison'],
       hp: 45,
       attack: 49,
       defense: 49,

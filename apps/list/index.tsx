@@ -1,5 +1,5 @@
-import Head from "next/head";
-import { Layout } from "../../components/Layout";
+import Head from 'next/head';
+import { Layout } from '../../components/Layout';
 
 import type { Pokemon } from '../../interfaces/pokemon';
 
@@ -36,4 +36,4 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
 
 ListPage.getLayout = Layout;
 
-export default ListPage
+export default ListPage;

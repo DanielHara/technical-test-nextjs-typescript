@@ -1,7 +1,7 @@
-import React from "react";
-import type { ReactElement } from "react";
-import { createGlobalStyle } from "styled-components";
-import styled from "styled-components";
+import React from 'react';
+import type { ReactElement } from 'react';
+import { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   padding: 0 2rem;
