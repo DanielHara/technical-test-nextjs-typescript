@@ -1,4 +1,4 @@
-import { render }  from '@testing-library/react';
+import { fireEvent, render, queries, waitFor }  from '@testing-library/react';
 import tableQueries from 'testing-library-table-queries';
 import ListPage from '../pages';
 
@@ -34,7 +34,7 @@ const mockPokemons = [{
 describe('home Page', () => {
   describe('table', () => {
     it('shows all information about Bulbasaur', () => {
-      const { getCellByRowAndColumnHeaders } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...tableQueries }}  );
+      const { getCellByRowAndColumnHeaders } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
 
       expect(getCellByRowAndColumnHeaders('1', 'Name', undefined)).toHaveTextContent('Bulbasaur');
       expect(getCellByRowAndColumnHeaders('1', 'Type', undefined)).toHaveTextContent('Grass, Poison');
@@ -47,7 +47,7 @@ describe('home Page', () => {
     });
 
     it('shows all information about Ivysaur', () => {
-      const { getCellByRowAndColumnHeaders } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...tableQueries }}  );
+      const { getCellByRowAndColumnHeaders } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
 
       expect(getCellByRowAndColumnHeaders('2', 'Name', undefined)).toHaveTextContent('Ivysaur');
       expect(getCellByRowAndColumnHeaders('2', 'Type', undefined)).toHaveTextContent('Grass, Poison');
@@ -60,11 +60,25 @@ describe('home Page', () => {
     });
   });
 
-  describe('search functionality', () => {
+  describe('Search functionality', () => {
     it('contains input where you can search Pokemon', () => {
       const { getByLabelText } = render(<ListPage pokemons={mockPokemons}/>);
 
       expect(getByLabelText('Search')).toBeInTheDocument();
+    });
+
+    it('searching for "Bulbasaur" will include only the Bulbasaur Pokemon in the result', () => {
+      const { getByLabelText, getAllRows, getRowByFirstCellText, queryAllRowsByFirstCellText } = render(<ListPage pokemons={mockPokemons}/>, { queries: { ...queries, ...tableQueries }}  );
+
+      fireEvent.change(getByLabelText('Search'), { target: { value: 'Bulbasaur' } });
+
+      // getAllRows also includes header rows, so we need to expect (1 + 1) rows.
+      expect(getAllRows()).toHaveLength(2);
+      
+      const bulbasaurRow = getRowByFirstCellText('1');
+      expect(bulbasaurRow).toHaveTextContent('Bulbasaur');
+
+      expect(queryAllRowsByFirstCellText('2')).toHaveLength(0);
     });
   });
 });
