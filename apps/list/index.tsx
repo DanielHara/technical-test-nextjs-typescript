@@ -11,7 +11,7 @@ const calculatePower = (pokemon: Pokemon) =>
   pokemon.special_defense +
   pokemon.speed;
 
-const HomePage = ({ pokemons }: { pokemons: Pokemon[] }) => {
+const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
   return (
     <>
       <Head>
@@ -34,6 +34,6 @@ const HomePage = ({ pokemons }: { pokemons: Pokemon[] }) => {
   );
 };
 
-HomePage.getLayout = Layout;
+ListPage.getLayout = Layout;
 
-export default HomePage
+export default ListPage

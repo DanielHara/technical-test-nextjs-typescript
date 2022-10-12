@@ -1,4 +1,4 @@
-import HomePage from '../apps/home';
+import ListPage from '../apps/list';
 
 export async function getServerSideProps() {
   try {
@@ -13,4 +13,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default HomePage;
+export default ListPage;
