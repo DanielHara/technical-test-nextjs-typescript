@@ -2,34 +2,9 @@ import { fireEvent, render, queries, waitFor }  from '@testing-library/react';
 import tableQueries from 'testing-library-table-queries';
 import ListPage from '../pages';
 
-const mockPokemons = [{
-  'id': 1,
-  'name': 'Bulbasaur',
-  'type': [
-    'Grass',
-    'Poison'
-  ],
-  'hp': 45,
-  'attack': 49,
-  'defense': 49,
-  'special_attack': 65,
-  'special_defense': 65,
-  'speed': 45
-},
-{
-  'id': 2,
-  'name': 'Ivysaur',
-  'type': [
-    'Grass',
-    'Poison'
-  ],
-  'hp': 60,
-  'attack': 62,
-  'defense': 63,
-  'special_attack': 80,
-  'special_defense': 80,
-  'speed': 60
-}];
+import { getMockPokemons } from './fixtures'; 
+
+const mockPokemons = getMockPokemons();
 
 describe('home Page', () => {
   describe('table', () => {
