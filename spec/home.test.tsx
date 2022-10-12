@@ -209,7 +209,8 @@ describe('home Page', () => {
         const { getByText } = render(<ListPage pokemons={mockPokemons}/>);
   
         expect(getByText(`Count over threshold: ${mockPokemons.length}`)).toBeInTheDocument();
-        expect(mockPokemons.length).toBeGreaterThan(0);
+        expect(getByText('Min: 195')).toBeInTheDocument();
+        expect(getByText('Max: 534')).toBeInTheDocument();
       });
   
       it('searching for "Bulbasaur"', () => {
@@ -218,6 +219,8 @@ describe('home Page', () => {
         fireEvent.change(getByLabelText('Search'), { target: { value: 'Bulbasaur' } });
   
         expect(getByText('Count over threshold: 1')).toBeInTheDocument();
+        expect(getByText('Min: 318')).toBeInTheDocument();
+        expect(getByText('Max: 318')).toBeInTheDocument();
       });
       
       it('searching for "char"', () => {
@@ -227,6 +230,8 @@ describe('home Page', () => {
   
         // "Charmander", "Charmeleon", "Charizard"
         expect(getByText('Count over threshold: 3')).toBeInTheDocument();
+        expect(getByText('Min: 309')).toBeInTheDocument();
+        expect(getByText('Max: 534')).toBeInTheDocument();
       });
 
       it('searching for "soapsoaksoaksoaks"', () => {
@@ -235,6 +240,8 @@ describe('home Page', () => {
         fireEvent.change(getByLabelText('Search'), { target: { value: 'soapsoaksoaksoaks' } });
   
         expect(getByText('Count over threshold: 0')).toBeInTheDocument();
+        expect(getByText('Min: -')).toBeInTheDocument();
+        expect(getByText('Max: -')).toBeInTheDocument();
       });
 
       it('Pokemons with total power > 300', () => {
@@ -245,6 +252,8 @@ describe('home Page', () => {
         const pokemonsAboveThreshold = mockPokemons.filter(pokemon => calculatePower(pokemon) > 300);
         
         expect(getByText(`Count over threshold: ${pokemonsAboveThreshold.length}`)).toBeInTheDocument();
+        expect(getByText('Min: 309')).toBeInTheDocument();
+        expect(getByText('Max: 534')).toBeInTheDocument();
         expect(pokemonsAboveThreshold.length).toBeGreaterThan(0);
       });
 
@@ -254,6 +263,8 @@ describe('home Page', () => {
         fireEvent.change(getByLabelText('Power threshold'), { target: { value: 10000 } });
 
         expect(getByText('Count over threshold: 0')).toBeInTheDocument();
+        expect(getByText('Min: -')).toBeInTheDocument();
+        expect(getByText('Max: -')).toBeInTheDocument();
       });
 
       it('Searching for "char" and with total power > 310', () => {
@@ -264,6 +275,8 @@ describe('home Page', () => {
 
         // "Charmeleon", "Charizard"
         expect(getByText('Count over threshold: 2')).toBeInTheDocument();
+        expect(getByText('Min: 405')).toBeInTheDocument();
+        expect(getByText('Max: 534')).toBeInTheDocument();
       });
     });
   });
