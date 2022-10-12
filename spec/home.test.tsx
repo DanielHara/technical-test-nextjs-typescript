@@ -279,5 +279,16 @@ describe('home Page', () => {
         expect(getByText('Max: 534')).toBeInTheDocument();
       });
     });
+
+    it('clicking on the row, redirects to the Pokemon', () => {
+      const mockWindowOpen = jest.fn();
+      window.open = mockWindowOpen;
+      
+      const { getByText } = render(<ListPage pokemons={mockPokemons}/>);
+  
+      fireEvent.click(getByText('Bulbasaur'));
+      
+      expect(mockWindowOpen).toHaveBeenCalledWith('/pokemon/1');
+    });
   });
 });
