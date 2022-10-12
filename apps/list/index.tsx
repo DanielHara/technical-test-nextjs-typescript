@@ -14,6 +14,10 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
   const filteredPokemons = pokemons
     .filter(({ name }) => name.toLowerCase().includes(searchTerm.toLowerCase()))
     .filter(pokemon => calculatePower(pokemon) > powerThreshold);
+
+  const powers = filteredPokemons.map(pokemon => calculatePower(pokemon));
+  const max = powers.length > 0 ? Math.max(...powers) : '-';
+  const min = powers.length > 0 ? Math.min(...powers) : '-';
   
   return (
     <>
@@ -32,8 +36,8 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
         <input id="power_threshold" type="number" value={powerThreshold || ''} onChange={({ target }) => setPowerThreshold(Number(target.value)) }></input>
 
         <span>{`Count over threshold: ${filteredPokemons.length}`}</span>
-        <span>Min: </span>
-        <span>Max: </span>
+        <span>{`Min: ${min}`}</span>
+        <span>{`Max: ${max}`}</span>
 
         <PokemonTable pokemons={filteredPokemons}/>
       </div>
