@@ -29,7 +29,7 @@ const ListPage = ({ pokemons }: { pokemons: Pokemon[] }) => {
         <input id="search" type="text" value={searchTerm} onChange={({ target }) => setSearchTerm(target.value) }/>
 
         <label htmlFor="power_threshold">Power threshold</label>
-        <input id="power_threshold" type="text"></input>
+        <input id="power_threshold" type="number"></input>
 
         <div>Count over threshold: </div>
         <div>Min: </div>
