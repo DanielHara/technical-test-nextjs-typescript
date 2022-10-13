@@ -45,5 +45,20 @@ describe('Pokemon Page', () => {
   
       expect(window.location.href).toBe('/pokemon/3');
     });
+
+    it('clicking on previous, goes to the previous Pokemon', () => {
+      delete window.location;
+      window.location = {};
+  
+      const pokemon = getMockPokemon();
+  
+      render(<PokemonDisplay {...pokemon} />);
+  
+      const previousButton = screen.getByText('< Previous');
+  
+      fireEvent.click(previousButton);
+  
+      expect(window.location.href).toBe('/pokemon/1');
+    });
   });
 });
