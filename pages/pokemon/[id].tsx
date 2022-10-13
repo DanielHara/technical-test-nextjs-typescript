@@ -1,58 +1,17 @@
 import React from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
 
 import { Pokemon } from '../../interfaces/pokemon';
 import { Layout } from '../../components/Layout';
+import PokemonArticle from '../../apps/pokemon';
 
 const PokemonPage = (pokemon: Pokemon) => {
-  const { name, id,  type, hp, attack, defense, special_attack, special_defense, speed, next, previous } = pokemon;
-
   return (
     <>
       <Head>
-        <title>{name}</title>
+        <title>{pokemon.name}</title>
       </Head>
-      <article>
-        <h1>{name}</h1>
-
-        <Image src={`/../public/images/${name.toLowerCase()}.jpg`} alt={name} width="100px" height="100px" />
-        
-        <div>
-          {`ID: ${id}`}
-        </div>
-        <div>
-          {`Name: ${name}`}
-        </div>
-        <div>
-          {`Type: ${type.join(', ')}`}
-        </div>
-        <div>
-          {`hp: ${hp}`}
-        </div>
-        <div>
-          {`Attack: ${attack}`}
-        </div>
-        <div>
-          {`Defense: ${defense}`}
-        </div>
-        <div>
-          {`Special Attack: ${special_attack}`}
-        </div>
-        <div>
-          {`Special Defense: ${special_defense}`}
-        </div>
-        <div>
-          {`Speed: ${speed}`}
-        </div>
-      </article>
-
-      {previous && <button  onClick={() => {
-        window.location.href= `/pokemon/${previous}`;
-      }}>{'< Previous'}</button>}
-      {next && <button onClick={() => {
-        window.location.href= `/pokemon/${next}`;
-      }}>{'Next >'}</button>}
+      <PokemonArticle {...pokemon} />
     </>
   );
 };
