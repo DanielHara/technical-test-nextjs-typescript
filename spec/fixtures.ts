@@ -1,3 +1,23 @@
+import type { Pokemon } from '../interfaces/pokemon';
+
+export const getMockPokemon = (attr?: Partial<Pokemon>) => ({
+  'id': 2,
+  'name': 'Ivysaur',
+  'type': [
+    'Grass',
+    'Poison'
+  ],
+  'hp': 60,
+  'attack': 62,
+  'defense': 63,
+  'special_attack': 80,
+  'special_defense': 80,
+  'speed': 60,
+  'next': 3,
+  'previous': 1,
+  ...attr,
+});
+
 export const getMockPokemons = () => [{
   'id': 1,
   'name': 'Bulbasaur',
