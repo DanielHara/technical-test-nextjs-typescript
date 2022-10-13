@@ -30,35 +30,52 @@ describe('Pokemon Page', () => {
     expect(image.tagName).toBe('IMG');
   });
 
-  describe('some random Pokemon in the middle of the list', () => {
-    it('clicking on next, goes to the next Pokemon', () => {
-      delete window.location;
-      window.location = {};
+  describe('next and previous logic', () => {
+    describe('some random Pokemon in the middle of the list', () => {
+      it('clicking on next, goes to the next Pokemon', () => {
+        delete window.location;
+        window.location = {};
+    
+        const pokemon = getMockPokemon();
+    
+        render(<PokemonDisplay {...pokemon} />);
+    
+        const nextButton = screen.getByText('Next >');
+    
+        fireEvent.click(nextButton);
+    
+        expect(window.location.href).toBe('/pokemon/3');
+      });
   
-      const pokemon = getMockPokemon();
-  
+      it('clicking on previous, goes to the previous Pokemon', () => {
+        delete window.location;
+        window.location = {};
+    
+        const pokemon = getMockPokemon();
+        render(<PokemonDisplay {...pokemon} />);
+    
+        const previousButton = screen.getByText('< Previous');
+    
+        fireEvent.click(previousButton);
+    
+        expect(window.location.href).toBe('/pokemon/1');
+      });
+    });
+    
+    it('first Pokemon has next button, but no previous button', () => {
+      const pokemon = getMockPokemon({ previous: null });
       render(<PokemonDisplay {...pokemon} />);
-  
-      const nextButton = screen.getByText('Next >');
-  
-      fireEvent.click(nextButton);
-  
-      expect(window.location.href).toBe('/pokemon/3');
+
+      expect(screen.getByText('< Previous')).not.toBeInTheDocument();
+      expect(screen.getByText('Next >')).toBeInTheDocument();
     });
 
-    it('clicking on previous, goes to the previous Pokemon', () => {
-      delete window.location;
-      window.location = {};
-  
-      const pokemon = getMockPokemon();
-  
+    it('last Pokemon has previous button, but no next button', () => {
+      const pokemon = getMockPokemon({ next: null });
       render(<PokemonDisplay {...pokemon} />);
-  
-      const previousButton = screen.getByText('< Previous');
-  
-      fireEvent.click(previousButton);
-  
-      expect(window.location.href).toBe('/pokemon/1');
+
+      expect(screen.getByText('< Previous')).toBeInTheDocument();
+      expect(screen.getByText('Next >')).not.toBeInTheDocument();
     });
   });
 });
