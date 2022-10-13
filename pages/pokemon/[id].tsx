@@ -5,9 +5,8 @@ import Image from 'next/image';
 import { Pokemon } from '../../interfaces/pokemon';
 import { Layout } from '../../components/Layout';
 
-
 const PokemonPage = (pokemon: Pokemon) => {
-  const { name, id,  type, hp, attack, defense, special_attack, special_defense, speed, next } = pokemon;
+  const { name, id,  type, hp, attack, defense, special_attack, special_defense, speed, next, previous } = pokemon;
 
   return (
     <>
@@ -48,7 +47,11 @@ const PokemonPage = (pokemon: Pokemon) => {
         </div>
       </article>
 
-      <button>{'< Previous'}</button>
+      <button  onClick={() => {
+        if (previous) {
+          window.location.href= `/pokemon/${previous}`;
+        }
+      }}>{'< Previous'}</button>
       <button onClick={() => {
         if (next) {
           window.location.href= `/pokemon/${next}`;
