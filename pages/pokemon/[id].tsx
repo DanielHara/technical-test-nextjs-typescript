@@ -1,11 +1,14 @@
 import React from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 
 import { Pokemon } from '../../interfaces/pokemon';
 import { Layout } from '../../components/Layout';
 
+
 const PokemonPage = (pokemon: Pokemon) => {
   const { name, id,  type, hp, attack, defense, special_attack, special_defense, speed } = pokemon;
+
   return (
     <>
       <Head>
@@ -13,6 +16,8 @@ const PokemonPage = (pokemon: Pokemon) => {
       </Head>
       <article>
         <h1>{name}</h1>
+
+        <Image src={`/../public/images/${name.toLowerCase()}.jpg`} alt={name} width="100px" height="100px" />
         
         <div>
           {`ID: ${id}`}

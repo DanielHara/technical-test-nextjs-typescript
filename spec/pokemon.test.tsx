@@ -19,4 +19,14 @@ describe('Pokemon Page', () => {
     expect(screen.getByText('Special Defense: 80')).toBeInTheDocument();
     expect(screen.getByText('Speed: 60')).toBeInTheDocument();
   });
+
+  it('shows pokemon image with alt equals the name of the Pokemon', () => {
+    const pokemon = getMockPokemon();
+
+    render(<PokemonDisplay {...pokemon} />);
+
+    const image = screen.getByAltText('Ivysaur');
+    expect(image).toBeInTheDocument();
+    expect(image.tagName).toBe('IMG');
+  });
 });
