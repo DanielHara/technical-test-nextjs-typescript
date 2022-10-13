@@ -9,14 +9,14 @@ export default async function handler(
   res: NextApiResponse<Pokemon>
 ) {
   if (!req.query.id) {
-    res.status(400);
+    res.status(400).json({ error: 'id is required' });
     return;
   }
   
   const id = Number(req.query.id);
 
   if (!Id2PokemonMap[id]) {
-    res.status(404);
+    res.status(404).json({ error: 'pokemon does not exist' });
     return;
   }
 

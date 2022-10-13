@@ -4,7 +4,8 @@ import Head from 'next/head';
 import { Pokemon } from '../../interfaces/pokemon';
 import { Layout } from '../../components/Layout';
 
-const PokemonPage = ({ name, id,  type, hp, attack, defense, special_attack, special_defense, speed }: Pokemon) => {
+const PokemonPage = (pokemon: Pokemon) => {
+  const { name, id,  type, hp, attack, defense, special_attack, special_defense, speed } = pokemon;
   return (
     <>
       <Head>
@@ -57,11 +58,15 @@ export async function getServerSideProps({
 }) {
   try {
     // Implement new endpoint in /api/pokemon/[id].ts and use it here
-    const pokemon = await fetch(`http://localhost:3000/api/pokemons/${id}`).then(
-      (resp) => resp.json()
-    );
+    const response = await fetch(`http://localhost:3000/api/pokemons/${id}`);
 
-    return { props: pokemon };
+    if (!response.ok) {
+      return {
+        notFound: true,
+      };
+    }
+
+    return { props: response.json() };
   } catch (error) {
     return {
       notFound: true,
