@@ -8,14 +8,16 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Pokemon>
 ) {
-  const id = Number(req.query.id);
-
-  if (!id) {
+  if (!req.query.id) {
     res.status(400);
+    return;
   }
+  
+  const id = Number(req.query.id);
 
   if (!Id2PokemonMap[id]) {
     res.status(404);
+    return;
   }
 
   const pokemon = Id2PokemonMap[id];
