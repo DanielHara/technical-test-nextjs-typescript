@@ -1,4 +1,4 @@
-import { render, screen }  from '@testing-library/react';
+import { fireEvent, render, screen }  from '@testing-library/react';
 import PokemonDisplay from '../pages/pokemon/[id]';
 
 import { getMockPokemon } from './fixtures';
@@ -20,7 +20,7 @@ describe('Pokemon Page', () => {
     expect(screen.getByText('Speed: 60')).toBeInTheDocument();
   });
 
-  it('shows pokemon image with alt equals the name of the Pokemon', () => {
+  it('shows pokemon image with alt which equals the name of the Pokemon', () => {
     const pokemon = getMockPokemon();
 
     render(<PokemonDisplay {...pokemon} />);
@@ -28,5 +28,22 @@ describe('Pokemon Page', () => {
     const image = screen.getByAltText('Ivysaur');
     expect(image).toBeInTheDocument();
     expect(image.tagName).toBe('IMG');
+  });
+
+  describe('some random Pokemon in the middle of the list', () => {
+    it('clicking on next, goes to the next Pokemon', () => {
+      delete window.location;
+      window.location = {};
+  
+      const pokemon = getMockPokemon();
+  
+      render(<PokemonDisplay {...pokemon} />);
+  
+      const nextButton = screen.getByText('Next >');
+  
+      fireEvent.click(nextButton);
+  
+      expect(window.location.href).toBe('/pokemon/3');
+    });
   });
 });
