@@ -18,6 +18,8 @@ describe('Pokemon Page', () => {
     expect(screen.getByText('Special Attack: 80')).toBeInTheDocument();
     expect(screen.getByText('Special Defense: 80')).toBeInTheDocument();
     expect(screen.getByText('Speed: 60')).toBeInTheDocument();
+
+    expect(screen.getByText('Power: 405')).toBeInTheDocument();
   });
 
   it('shows pokemon image with alt which equals the name of the Pokemon', () => {
