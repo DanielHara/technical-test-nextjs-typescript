@@ -66,7 +66,7 @@ describe('Pokemon Page', () => {
       const pokemon = getMockPokemon({ previous: null });
       render(<PokemonDisplay {...pokemon} />);
 
-      expect(screen.getByText('< Previous')).not.toBeInTheDocument();
+      expect(screen.queryByText('< Previous')).toBeNull();
       expect(screen.getByText('Next >')).toBeInTheDocument();
     });
 
@@ -75,7 +75,7 @@ describe('Pokemon Page', () => {
       render(<PokemonDisplay {...pokemon} />);
 
       expect(screen.getByText('< Previous')).toBeInTheDocument();
-      expect(screen.getByText('Next >')).not.toBeInTheDocument();
+      expect(screen.queryByText('Next >')).toBeNull();
     });
   });
 });

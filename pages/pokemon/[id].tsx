@@ -47,16 +47,12 @@ const PokemonPage = (pokemon: Pokemon) => {
         </div>
       </article>
 
-      <button  onClick={() => {
-        if (previous) {
-          window.location.href= `/pokemon/${previous}`;
-        }
-      }}>{'< Previous'}</button>
-      <button onClick={() => {
-        if (next) {
-          window.location.href= `/pokemon/${next}`;
-        }
-      }}>{'Next >'}</button>
+      {previous && <button  onClick={() => {
+        window.location.href= `/pokemon/${previous}`;
+      }}>{'< Previous'}</button>}
+      {next && <button onClick={() => {
+        window.location.href= `/pokemon/${next}`;
+      }}>{'Next >'}</button>}
     </>
   );
 };
