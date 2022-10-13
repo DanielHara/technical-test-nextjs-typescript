@@ -7,7 +7,7 @@ import { Layout } from '../../components/Layout';
 
 
 const PokemonPage = (pokemon: Pokemon) => {
-  const { name, id,  type, hp, attack, defense, special_attack, special_defense, speed } = pokemon;
+  const { name, id,  type, hp, attack, defense, special_attack, special_defense, speed, next } = pokemon;
 
   return (
     <>
@@ -49,7 +49,11 @@ const PokemonPage = (pokemon: Pokemon) => {
       </article>
 
       <button>{'< Previous'}</button>
-      <button>{'Next >'}</button>
+      <button onClick={() => {
+        if (next) {
+          window.location.href= `/pokemon/${next}`;
+        }
+      }}>{'Next >'}</button>
     </>
   );
 };
