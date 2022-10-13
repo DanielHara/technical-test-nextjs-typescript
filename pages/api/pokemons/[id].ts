@@ -12,6 +12,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Pokemon | IError>
 ) {
+  if (req.method !== 'GET') {
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
+  } 
+  
   if (!req.query.id) {
     res.status(400).json({ error: 'id is required' });
     return;
