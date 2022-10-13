@@ -72,3 +72,10 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 ```bash
 @user:~$ npm run test
 ```
+
+My solution:
+
+I've used TDD extensively to build up the app. This is how it looks like:
+
+https://user-images.githubusercontent.com/17606011/195508077-41644601-f9e0-4851-a037-d280f03cbc15.mov
+
