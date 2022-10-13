@@ -77,5 +77,4 @@ My solution:
 
 I've used TDD extensively to build up the app. This is how it looks like:
 
-https://user-images.githubusercontent.com/17606011/195508077-41644601-f9e0-4851-a037-d280f03cbc15.mov
-
+https://user-images.githubusercontent.com/17606011/195508365-48e47bfd-3529-42d6-936c-be2d6b2cf145.mov
