@@ -4,9 +4,13 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import Id2PokemonMap, { ListLength } from '../data/pokemonMap';
 import { Pokemon } from '../../../interfaces/pokemon';
 
+interface IError {
+  error: string
+}
+
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Pokemon>
+  res: NextApiResponse<Pokemon | IError>
 ) {
   if (!req.query.id) {
     res.status(400).json({ error: 'id is required' });
