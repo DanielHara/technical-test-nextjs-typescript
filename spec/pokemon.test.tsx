@@ -17,6 +17,6 @@ describe('Pokemon Page', () => {
     expect(screen.getByText('Defense: 63')).toBeInTheDocument();
     expect(screen.getByText('Special Attack: 80')).toBeInTheDocument();
     expect(screen.getByText('Special Defense: 80')).toBeInTheDocument();
-    expect(screen.getByText('Speed 60')).toBeInTheDocument();
+    expect(screen.getByText('Speed: 60')).toBeInTheDocument();
   });
 });

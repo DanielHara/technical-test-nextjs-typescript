@@ -1,5 +1,5 @@
 import { createMocks } from 'node-mocks-http';
-import getPokemon from '../pages/api/pokemon/[id]';
+import getPokemon from '../pages/api/pokemons/[id]';
 
 describe('/pokemon/[id]', () => {
   it('no id provided gives a 400', async () => {
