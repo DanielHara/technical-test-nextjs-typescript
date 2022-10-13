@@ -1,5 +1,5 @@
-import Pokemons from './pokemon.json';
-import type { Pokemon } from '../../../interfaces/pokemon';
+import Pokemons from '../pages/api/data/pokemon.json';
+import type { Pokemon } from '../interfaces/pokemon';
 
 const id2PokemonMap: Record<number, Pokemon> = {};
 

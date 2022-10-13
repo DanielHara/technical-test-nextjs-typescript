@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import Id2PokemonMap, { ListLength } from '../data/pokemonMap';
+import Id2PokemonMap, { ListLength } from '../../../backend/pokemonMap';
 import { Pokemon } from '../../../interfaces/pokemon';
 
 interface IError {
