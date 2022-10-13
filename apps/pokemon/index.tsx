@@ -2,9 +2,11 @@ import React from 'react';
 import Image from 'next/image';
 
 import { Pokemon } from '../../interfaces/pokemon';
+import { calculatePower } from '../utils';
 
 const PokemonPage = (pokemon: Pokemon) => {
   const { name, id,  type, hp, attack, defense, special_attack, special_defense, speed, next, previous } = pokemon;
+  const power = calculatePower(pokemon);
 
   return <article>
     <h1>{name}</h1>
@@ -37,6 +39,10 @@ const PokemonPage = (pokemon: Pokemon) => {
     </div>
     <div>
       {`Speed: ${speed}`}
+    </div>
+
+    <div>
+      {`Power: ${power}`}
     </div>
 
     {previous && <button  onClick={() => {
