@@ -2,6 +2,20 @@ import { createMocks } from 'node-mocks-http';
 import getPokemon from '../pages/api/pokemons/[id]';
 
 describe('/pokemon/[id]', () => {
+  it('POST is not allowed', async () => {
+    const { req, res } = createMocks({
+      method: 'POST',
+      query: {
+        id: '2'
+      },
+    });
+              
+    await getPokemon(req, res);
+    
+    expect(res._getStatusCode()).toBe(405);
+  });
+    
+
   it('no id provided gives a 400', async () => {
     const { req, res } = createMocks({
       method: 'GET',
