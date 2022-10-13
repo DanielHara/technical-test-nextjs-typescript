@@ -2,6 +2,30 @@ import { createMocks } from 'node-mocks-http';
 import getPokemon from '../pages/api/pokemon/[id]';
 
 describe('/pokemon/[id]', () => {
+  it('no id provided gives a 400', async () => {
+    const { req, res } = createMocks({
+      method: 'GET',
+      query: {},
+    });
+          
+    await getPokemon(req, res);
+
+    expect(res._getStatusCode()).toBe(400);
+  });
+
+  it('inexistent id gives a 404', async () => {
+    const { req, res } = createMocks({
+      method: 'GET',
+      query: {
+        id: '28912891829182'
+      },
+    });
+          
+    await getPokemon(req, res);
+
+    expect(res._getStatusCode()).toBe(404);
+  });
+  
   describe('returns a Pokemon when the id exists',  () => {
     it('some random Pokemon', async () => {
       const { req, res } = createMocks({
