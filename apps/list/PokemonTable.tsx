@@ -1,4 +1,4 @@
-import { Pokemon } from '../../interfaces/pokemon';
+import type { Pokemon } from '../../interfaces/pokemon';
 import TableHead from './TableHead';
 import Row from './Row';
 import styled from 'styled-components';

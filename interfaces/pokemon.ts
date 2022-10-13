@@ -8,4 +8,6 @@ export interface Pokemon {
   special_attack: number;
   special_defense: number;
   speed: number;
+  next?: number | null;
+  previous?: number | null;
 }
